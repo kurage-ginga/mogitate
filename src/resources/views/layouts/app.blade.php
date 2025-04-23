@@ -5,18 +5,22 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Contact Form</title>
+        <title>@yield('title', 'もぎたてフルーツ')</title>
         <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
         @yield('css')
     </head>
 
-    <body>
+    <body class="body">
         <header class="header">
             <div class="header__inner">
-                <a class="header__logo" href="/">
-                    mogitate
-                </a>
+                <h1 class="header__logo" href="/">
+                    <a href="{{ route('products.index') }}">もぎたてフルーツ</a>
+                </h1>
+                <nav>
+                    <a href="{{ route('products.index') }}" class="header__show">商品一覧</a>
+                    <a href="{{ route('products.create') }}" class="header__link">商品登録</a>
+                </nav>
             </div>
         </header>
 
