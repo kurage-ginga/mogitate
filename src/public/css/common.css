@@ -38,3 +38,9 @@
 .header__link:hover {
     color: #ffa92a;
 }
+
+.form__error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
