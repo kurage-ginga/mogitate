@@ -43,7 +43,7 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'price' => ['required', 'integer', 'between:0,10000'],
             'season' => ['required'],
-            'description' => ['nullable', 'string', 'max:120'],
+            'description' => ['required', 'string', 'max:120'],
             'image' => ['required', 'image', 'mimes:png,jpeg', 'max:2048'],
             'season' => ['required', 'array'],
             'season.*' => ['exists:seasons,id'],
@@ -53,6 +53,7 @@ class ProductController extends Controller
             'price.integer' => '数値で入力してください',
             'price.between' => '0〜10000円以内で入力してください',
             'season.required' => '季節を選択してください',
+            'description.required' => '商品説明を入力してください',
             'description.max' => '120文字以内で入力してください',
             'image.required' => '商品画像を登録してください',
             'image.image' => '画像ファイルを選択してください',
@@ -81,17 +82,10 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load('seasons');
-
-        return view('products.show', compact('product'));
-    }
-
-    public function edit(Product $product)
-    {
         $seasons = Season::all();
         $product->load('seasons');
 
-        return view('products.edit', compact('product', 'seasons'));
+        return view('products.show', compact('product', 'seasons'));
     }
 
     public function update(Request $request, Product $product)
@@ -118,5 +112,12 @@ class ProductController extends Controller
         $product->seasons()->sync($validated['season']);
 
         return redirect()->route('products.show', $product)->with('success', '商品を更新しました！');
-}
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', '商品を削除しました！');
+    }
 }
